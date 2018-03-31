@@ -1,7 +1,7 @@
 ﻿#pragma comment(linker,"\"/manifestdependency:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
 #pragma comment(lib, "shlwapi")
-#pragma comment(lib, "gdiplus.lib")
+#pragma comment(lib, "gdiplus")
 
 #include <windows.h>
 #include <shlwapi.h>
@@ -89,16 +89,12 @@ END0:
 
 VOID CreateFileFromResource(TCHAR *szResourceName, TCHAR *szResourceType, TCHAR *szResFileName)
 {
-	HRSRC hRs;
-	HGLOBAL hMem;
-	HANDLE hFile;
-	LPBYTE lpByte;
-	DWORD dwWritten, dwResSize;
-	hRs = FindResource(0, szResourceName, szResourceType);
-	dwResSize = SizeofResource(0, hRs);
-	hMem = LoadResource(0, hRs);
-	lpByte = (BYTE *)LockResource(hMem);
-	hFile = CreateFile(szResFileName, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+	HRSRC hRs = FindResource(0, szResourceName, szResourceType);
+	DWORD dwResSize = SizeofResource(0, hRs);
+	HGLOBAL hMem = LoadResource(0, hRs);
+	LPBYTE lpByte = (BYTE *)LockResource(hMem);
+	HANDLE hFile = CreateFile(szResFileName, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+	DWORD dwWritten;
 	WriteFile(hFile, lpByte, dwResSize, &dwWritten, NULL);
 	CloseHandle(hFile);
 }

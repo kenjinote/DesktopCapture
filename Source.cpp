@@ -194,7 +194,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 					TCHAR szFromPath[MAX_PATH] = { 0 };
 					lstrcpy(szFromPath, szTempDir);
 					PathAppend(szFromPath, lpszCaptureFileName);
-					MoveFileEx(szFromPath, szToPath, MOVEFILE_WRITE_THROUGH | MOVEFILE_REPLACE_EXISTING);
+					MoveFileEx(szFromPath, szToPath, MOVEFILE_WRITE_THROUGH | MOVEFILE_REPLACE_EXISTING | MOVEFILE_COPY_ALLOWED);
 				}
 			}
 			{
